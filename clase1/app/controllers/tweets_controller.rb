@@ -1,7 +1,10 @@
 class TweetsController < ApplicationController
     def index
         @tweets = Tweet.all 
+        
+        @tweets_b_a = User.find(1).tweets
     end
+
         
     def new
         @tweet = Tweet.new
@@ -9,6 +12,11 @@ class TweetsController < ApplicationController
 
     def edit
         @tweet = Tweet.find(params[:id])
+    end
+
+    def show
+        @tweet = Tweet.find(params[:id])
+        @tweet_new = Tweet.new
     end
 
     def create
@@ -23,6 +31,11 @@ class TweetsController < ApplicationController
         redirect_to tweets_path
     end
 
+    def destroy
+        @tweet = Tweet.find(params[:id])
+        @tweet.destroy
+        redirect_to tweets_path
+    end
 
     def tweet_params
         params.require(:tweet).permit(:id,:message)
